@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="Wedding gift QR code">
+  <rect width="220" height="220" rx="12" fill="#fffaf1"/>
+  <rect x="12" y="12" width="196" height="196" rx="8" fill="#ffffff" stroke="#d9c3a3" stroke-width="2"/>
+  <g fill="#2c2724">
+    <path d="M28 28h48v48H28zM144 28h48v48h-48zM28 144h48v48H28z"/>
+    <path fill="#fff" d="M38 38h28v28H38zM154 38h28v28h-28zM38 154h28v28H38z"/>
+    <path d="M46 46h12v12H46zM162 46h12v12h-12zM46 162h12v12H46z"/>
+    <path d="M92 28h12v12H92zM116 28h12v12h-12zM92 52h36v12H92zM104 76h12v12h-12zM128 76h12v12h-12z"/>
+    <path d="M88 100h12v12H88zM112 100h24v12h-24zM148 100h12v12h-12zM172 100h20v12h-20z"/>
+    <path d="M88 124h36v12H88zM136 124h12v12h-12zM160 124h12v12h-12zM184 124h8v12h-8z"/>
+    <path d="M88 148h12v12H88zM112 148h12v12h-12zM136 148h36v12h-36zM184 148h8v12h-8z"/>
+    <path d="M88 172h24v12H88zM124 172h12v12h-12zM148 172h12v12h-12zM172 172h20v12h-20z"/>
+    <path d="M92 196h12v-12h12v12h24v-24h12v24h40v12H92z"/>
+  </g>
+  <circle cx="110" cy="110" r="17" fill="#c69b62"/>
+  <path d="M110 100c-9-9-23 5 0 20 23-15 9-29 0-20z" fill="#fff7ea"/>
+</svg>
