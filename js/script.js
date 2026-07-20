@@ -27,6 +27,7 @@ envelope.addEventListener('click', () => {
   envelope.classList.remove('close');
   envelope.classList.add('open');
   document.body.classList.remove('cover-locked');
+  bgMusic.currentTime = 18;
   bgMusic.play().then(() => {
     musicToggle.classList.add('playing');
   }).catch(() => {});
