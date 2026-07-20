@@ -26,6 +26,8 @@ body {
 
 body.cover-locked {
   overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
 }
 
 img { max-width: 100%; display: block; }
@@ -48,10 +50,13 @@ img { max-width: 100%; display: block; }
   text-align: center;
   gap: 18px;
   min-height: 100vh;
+  min-height: 100dvh;
   justify-content: flex-start;
   padding-top: 46px;
   padding-bottom: 110px;
   overflow: hidden;
+  position: relative;
+  z-index: 10;
 }
 
 /* khung góc trang trí */
@@ -256,9 +261,9 @@ img { max-width: 100%; display: block; }
 .letter {
   position: relative;
   background-color: #fff;
-  width: 90%;
-  height: 104%;
-  top: -2%;
+  width: 80%;
+  height: 90%;
+  top: 5%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 6px;
@@ -370,10 +375,7 @@ body.cover-locked .music-toggle {
 /* ===== SHARED ===== */
 .main-content { position: relative; }
 body.cover-locked .main-content {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  pointer-events: none;
+  display: none;
 }
 body.cover-locked .floating-toolbar {
   opacity: 0;
