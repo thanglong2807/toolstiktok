@@ -1,5 +1,7 @@
-// ===== CẤU HÌNH: đổi ngày cưới thật của bạn tại đây =====
+// ===== CẤU HÌNH =====
 const WEDDING_DATE = new Date('2026-08-01T11:00:00');
+const GOOGLE_SHEET_RSVP = 'https://script.google.com/macros/s/AKfycbzL5NDjWEv56AK53WXuXHnLv0COzLLku91DcgZlNm9kTO_be9f5x1qOIgPqL90Nrxlq/exec';
+const GOOGLE_SHEET_WISH = 'https://script.google.com/macros/s/AKfycbwnekyhmOrfASO1te6aNRGBDB5Ci_mJCCev7M1Wf2A3QmsFobzzQSvRDXcrmV5oJ3zr/exec';
 
 // ===== PHẦN TỬ DOM =====
 const envelope = document.getElementById('envelope');
@@ -20,6 +22,22 @@ const DEFAULT_WISHES = [
 ];
 
 console.log('toolstiktok build:', document.body.dataset.build || 'unknown');
+
+// ===== LỜI CHÚC: TẢI TỪ GOOGLE SHEETS =====
+let allWishes = [...DEFAULT_WISHES];
+
+function fetchWishesFromSheet() {
+  fetch(GOOGLE_SHEET_WISH)
+    .then(res => res.json())
+    .then(data => {
+      if (Array.isArray(data) && data.length > 0) {
+        allWishes = [...DEFAULT_WISHES, ...data];
+      }
+    })
+    .catch(() => {});
+}
+
+fetchWishesFromSheet();
 
 // ===== MỞ PHONG BÌ =====
 envelope.addEventListener('click', () => {
@@ -97,21 +115,6 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
 
 // ===== LỜI CHÚC BAY LÊN =====
-function loadWishes() {
-  try {
-    const saved = JSON.parse(localStorage.getItem('weddingWishes') || '[]');
-    return [...DEFAULT_WISHES, ...saved];
-  } catch {
-    return DEFAULT_WISHES;
-  }
-}
-
-function saveWish(wish) {
-  const saved = JSON.parse(localStorage.getItem('weddingWishes') || '[]');
-  saved.push(wish);
-  localStorage.setItem('weddingWishes', JSON.stringify(saved.slice(-50)));
-}
-
 const MAX_VISIBLE = 6;
 
 function showBlessing(wish) {
@@ -133,11 +136,9 @@ function showBlessing(wish) {
 let blessingIndex = 0;
 
 function startBlessingLoop() {
-  const wishes = loadWishes();
-  if (!wishes.length) return;
-
   function showNext() {
-    showBlessing(wishes[blessingIndex % wishes.length]);
+    if (allWishes.length === 0) return;
+    showBlessing(allWishes[blessingIndex % allWishes.length]);
     blessingIndex++;
     const delay = 800 + Math.random() * 700;
     setTimeout(showNext, delay);
@@ -155,10 +156,16 @@ wishForm.addEventListener('submit', (e) => {
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
   const wish = { name: 'Bạn', emoji, message: text };
 
-  saveWish(wish);
   showBlessing(wish);
   wishInput.value = '';
   wishInput.blur();
+
+  fetch(GOOGLE_SHEET_WISH, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(wish),
+  }).catch(() => {});
 });
 
 // ===== BẮN TIM =====
@@ -181,7 +188,6 @@ heartBtn.addEventListener('click', () => {
 });
 
 // ===== RSVP FORM → GOOGLE SHEETS =====
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzL5NDjWEv56AK53WXuXHnLv0COzLLku91DcgZlNm9kTO_be9f5x1qOIgPqL90Nrxlq/exec';
 const rsvpForm = document.getElementById('rsvpForm');
 const rsvpThanks = document.getElementById('rsvpThanks');
 const rsvpBtn = rsvpForm.querySelector('.btn-submit');
@@ -199,8 +205,8 @@ rsvpForm.addEventListener('submit', (e) => {
   rsvpBtn.disabled = true;
   rsvpBtn.textContent = 'Đang gửi...';
 
-  if (GOOGLE_SHEET_URL) {
-    fetch(GOOGLE_SHEET_URL, {
+  if (GOOGLE_SHEET_RSVP) {
+    fetch(GOOGLE_SHEET_RSVP, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
