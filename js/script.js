@@ -1,5 +1,5 @@
 // ===== CẤU HÌNH: đổi ngày cưới thật của bạn tại đây =====
-const WEDDING_DATE = new Date('2026-08-08T11:00:00');
+const WEDDING_DATE = new Date('2026-08-01T11:00:00');
 
 // ===== PHẦN TỬ DOM =====
 const envelope = document.getElementById('envelope');
